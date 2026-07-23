@@ -94,6 +94,16 @@ generator = cms.EDFilter("Pythia8ConcurrentHadronizerFilter",
 )
 
 
+MuMuFilter = cms.EDFilter("MCParticlePairFilter",
+    Status = cms.untracked.vint32(1, 1),
+    MinPt = cms.untracked.vdouble(2, 2),
+    MaxEta = cms.untracked.vdouble(2.5, 2.5),
+    MinEta = cms.untracked.vdouble(-2.5, -2.5),
+    ParticleID1 = cms.untracked.vint32(13,-13),
+)
+ProductionFilterSequence = cms.Sequence(generator*MuMuFilter)
+
+
 
 # Link to generator fragment:
 # GluGluHToDarkShowers-ScenarioA_Par-ctau-1000-mA-1p67-mpi-5_cfi.py

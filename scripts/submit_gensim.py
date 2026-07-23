@@ -36,10 +36,10 @@ CMSDRIVER_TEMPLATE = (
     " --beamspot DBrealistic"
     " --step LHE,GEN,SIM"
     " --geometry DB:Extended"
-    " --conditions 140X_mcRun3_2024_realistic_v26"
-    r""" --customise_commands 'process.RandomNumberGeneratorService.externalLHEProducer.initialSeed="int(${SEED})"'"""
-    " --datatier GEN-SIM,LHE"
-    " --eventcontent RAWSIM,LHE"
+    " --conditions 150X_mcRun3_2024_realistic_v3"
+    r""" --customise_commands 'process.RandomNumberGeneratorService.externalLHEProducer.initialSeed="int(${{SEED}})"'"""
+    " --datatier GEN-SIM"
+    " --eventcontent RAWSIM"
     " --python_filename {cfg}"
     " --fileout file:{name}.root"
     " --number {n_events}"
@@ -116,18 +116,21 @@ def generate_cfg(fragment: Path, name: str, job_dir: Path,
 
 def write_crab_config(name: str, cfg: Path, work_area: Path,
                       events_per_job: int, total_events: int,
-                      lfn_base: str, tag: str, site: str) -> Path:
+                      lfn_base: str, tag: str, site: str,
+                      dry_run: bool) -> Path:
     crab_cfg = cfg.parent / f"crab_{name}.py"
-    crab_cfg.write_text(CRAB_TEMPLATE.format(
-        name=name,
-        work_area=str(work_area),
-        cfg=str(cfg),
-        events_per_job=events_per_job,
-        total_events=total_events,
-        lfn_base=lfn_base,
-        tag=tag,
-        site=site,
-    ))
+    print(f"    $ write {crab_cfg}")
+    if not dry_run:
+        crab_cfg.write_text(CRAB_TEMPLATE.format(
+            name=name,
+            work_area=str(work_area),
+            cfg=str(cfg),
+            events_per_job=events_per_job,
+            total_events=total_events,
+            lfn_base=lfn_base,
+            tag=tag,
+            site=site,
+        ))
     return crab_cfg
 
 
@@ -212,9 +215,23 @@ def parse_args():
 
 
 def main():
+    # Hardcoded (scenario, mpi, mA, ctau) mass points/lifetimes to produce.
+    # Leave empty to process every fragment discovered in --fragments-dir
+    # (optionally narrowed by --filter).
+    DATASETS = [
+        # ("A",  "1p2", "0p40", "0p1"),
+        # ("B1", "2",   "0p67", "10"),
+    ]
+
     args = parse_args()
 
     fragments = discover_fragments(args.fragments_dir, args.filter)
+    if DATASETS:
+        wanted = {
+            f"GluGluHToDarkShowers-Scenario{scenario}_Par-ctau-{ctau}-mA-{mA}-mpi-{mpi}"
+            for scenario, mpi, mA, ctau in DATASETS
+        }
+        fragments = [f for f in fragments if sample_name(f) in wanted]
     if not fragments:
         sys.exit(
             f"ERROR: No fragments found in {args.fragments_dir}"
@@ -230,7 +247,8 @@ def main():
         install_fragments(args.fragments_dir, args.cmssw_base, args.dry_run)
 
     work_area = Path(args.work_area).resolve()
-    work_area.mkdir(parents=True, exist_ok=True)
+    if not args.dry_run:
+        work_area.mkdir(parents=True, exist_ok=True)
 
     label = "[DRY-RUN] " if args.dry_run else ""
     print(f"{label}Processing {len(fragments)} fragment(s)  |  "
@@ -262,6 +280,7 @@ def main():
                 lfn_base=args.lfn_base,
                 tag=args.tag,
                 site=args.site,
+                dry_run=args.dry_run,
             )
             crab_submit(name, crab_cfg, job_dir, args.dry_run)
             n_ok += 1
