@@ -37,7 +37,7 @@ CMSDRIVER_TEMPLATE = (
     " --step LHE,GEN,SIM"
     " --geometry DB:Extended"
     " --conditions 150X_mcRun3_2024_realistic_v3"
-    r""" --customise_commands 'process.RandomNumberGeneratorService.externalLHEProducer.initialSeed="int(${{SEED}})"'"""
+    """ --customise_commands 'process.RandomNumberGeneratorService.externalLHEProducer.initialSeed=12345'"""
     " --datatier GEN-SIM"
     " --eventcontent RAWSIM"
     " --python_filename {cfg}"
@@ -54,7 +54,7 @@ config = config()
 config.General.requestName = '{name}'
 config.General.workArea = '{work_area}'
 config.General.transferOutputs = True
-config.General.transferLogs = True
+config.General.transferLogs = False
 
 config.JobType.pluginName = 'PrivateMC'
 config.JobType.psetName = '{cfg}'
@@ -68,6 +68,10 @@ config.Data.publication = True
 config.Data.outputDatasetTag = '{tag}'
 
 config.Site.storageSite = '{site}'
+config.Site.blacklist = ['T2_US_MIT']
+
+config.section_("Debug")
+config.Debug.extraJDL = ['My.CMS_ALLOW_OVERFLOW=False']
 """
 
 
@@ -120,17 +124,19 @@ def write_crab_config(name: str, cfg: Path, work_area: Path,
                       dry_run: bool) -> Path:
     crab_cfg = cfg.parent / f"crab_{name}.py"
     print(f"    $ write {crab_cfg}")
+    content = CRAB_TEMPLATE.format(
+        name=name,
+        work_area=str(work_area),
+        cfg=str(cfg),
+        events_per_job=events_per_job,
+        total_events=total_events,
+        lfn_base=lfn_base,
+        tag=tag,
+        site=site,
+    )
+    print(content)
     if not dry_run:
-        crab_cfg.write_text(CRAB_TEMPLATE.format(
-            name=name,
-            work_area=str(work_area),
-            cfg=str(cfg),
-            events_per_job=events_per_job,
-            total_events=total_events,
-            lfn_base=lfn_base,
-            tag=tag,
-            site=site,
-        ))
+        crab_cfg.write_text(content)
     return crab_cfg
 
 
@@ -179,23 +185,23 @@ def parse_args():
         help="CRAB workArea directory (created if absent)",
     )
     p.add_argument(
-        "--n-events", type=int, default=10000,
+        "--n-events", type=int, default=1000000,
         help="Total events per sample",
     )
     p.add_argument(
-        "--events-per-job", type=int, default=500,
+        "--events-per-job", type=int, default=1000,
         help="Events per CRAB job",
     )
     p.add_argument(
-        "--lfn-base", type=str, default="/store/user/YOUR_USERNAME/samples/GEN-SIM/",
+        "--lfn-base", type=str, default="/store/user/fernance/FinalScoutingProduction/GEN-SIM/",
         help="LFN output base path on the storage element",
     )
     p.add_argument(
-        "--site", type=str, default="T2_UK_London_IC",
+        "--site", type=str, default="T2_US_UCSD",
         help="CMS storage site for output",
     )
     p.add_argument(
-        "--tag", type=str, default="RunIII2024Summer24wmLHEGS",
+        "--tag", type=str, default="gensim_2024_v0",
         help="CRAB outputDatasetTag",
     )
     p.add_argument(
@@ -219,7 +225,7 @@ def main():
     # Leave empty to process every fragment discovered in --fragments-dir
     # (optionally narrowed by --filter).
     DATASETS = [
-        # ("A",  "1p2", "0p40", "0p1"),
+        ("A",  "5", "1p67", "10")
         # ("B1", "2",   "0p67", "10"),
     ]
 
