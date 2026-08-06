@@ -1,16 +1,16 @@
-# hltGetConfiguration /dev/CMSSW_15_0_0/GRun --globaltag 150X_mcRun3_2024_realistic_v3 --mc --input file:rawsim_out.root --max-events -1 --output full --unprescale --eras Run3_2024 --l1-emulator uGT --l1 L1Menu_Collisions2025_v1_3_0_xml --paths ScoutingPFOutput,DST_PFScouting_*,Dataset_ScoutingPFRun3
+# hltGetConfiguration adg:/cdaq/physics/Run2025/2e34/v1.3.4/HLT/V1 --process HLT --globaltag 150X_mcRun3_2024_realistic_v3 --mc --input file:rawsim_out.root --max-events -1 --output full --unprescale --eras Run3_2025 --l1-emulator uGT --l1 L1Menu_Collisions2025_v1_3_0_xml --paths ScoutingPFOutput,DST_PFScouting_*,Dataset_ScoutingPFRun3
 
-# /dev/CMSSW_15_0_0/GRun/V120 (CMSSW_15_0_15_patch1)
+# /cdaq/physics/Run2025/2e34/v1.3.4/HLT/V1 (CMSSW_15_0_15_patch1)
 
 import FWCore.ParameterSet.Config as cms
 
-from Configuration.Eras.Era_Run3_2024_cff import Run3_2024
-process = cms.Process( "HLT", Run3_2024 )
+from Configuration.Eras.Era_Run3_2025_cff import Run3_2025
+process = cms.Process( "HLT", Run3_2025 )
 
 process.load("Configuration.StandardSequences.Accelerators_cff")
 
 process.HLTConfigVersion = cms.PSet(
-  tableName = cms.string("/dev/CMSSW_15_0_0/GRun/V120")
+  tableName = cms.string("/cdaq/physics/Run2025/2e34/v1.3.4/HLT/V1")
 )
 
 process.HLTGroupedCkfTrajectoryBuilderP5 = cms.PSet( 
@@ -1229,6 +1229,12 @@ process.HLTPSetHighPtTripletStepTrajectoryBuilderForDmesonPPOnAA = cms.PSet(
   bestHitOnly = cms.bool( True ),
   seedAs5DHit = cms.bool( False )
 )
+process.PrescaleTableInfo = cms.PSet( 
+  tablename = cms.string( "collisions2025/79" ),
+  tableuuid = cms.string( "423dd1d2-b2f4-4a90-a7ab-cbc01b608d0d" ),
+  dbname = cms.string( "prescales_main" ),
+  modified = cms.bool( False )
+)
 process.streams = cms.PSet( 
   ALCAHcalIsoTrk = cms.vstring( 'AlCaHcalIsoTrk' ),
   ALCALowPtJet = cms.vstring( 'AlCaLowPtJet' ),
@@ -1297,7 +1303,6 @@ process.streams = cms.PSet(
     'Cosmics',
     'HLTPhysics',
     'HcalNZS',
-    'MonteCarlo',
     'NoBPTX',
     'ZeroBias' ),
   PhysicsEGamma0 = cms.vstring( 'EGamma0' ),
@@ -2233,32 +2238,6 @@ process.datasets = cms.PSet(
     'HLT_PFMETTypeOne200_BeamHaloCleaned_v25' ),
   L1Accept = cms.vstring( 'DST_Physics_v17',
     'DST_ZeroBias_v12' ),
-  MonteCarlo = cms.vstring( 'MC_AK4CaloJetsFromPV_v21',
-    'MC_AK4CaloJets_v21',
-    'MC_AK4PFJetPNet_v9',
-    'MC_AK4PFJets_v33',
-    'MC_AK8CaloHT_v20',
-    'MC_AK8PFHT_v32',
-    'MC_AK8PFJetPNet_v9',
-    'MC_AK8PFJets_v33',
-    'MC_CaloHT_v20',
-    'MC_CaloMET_JetIdCleaned_v21',
-    'MC_CaloMET_v20',
-    'MC_CaloMHT_v20',
-    'MC_Diphoton10_10_R9Id_OR_IsoCaloId_AND_HE_R9Id_Mass10_v26',
-    'MC_DoubleEle5_CaloIdL_MW_v29',
-    'MC_DoubleMuNoFiltersNoVtx_v20',
-    'MC_DoubleMu_TrkIsoVVL_DZ_v27',
-    'MC_Egamma_Open_Unseeded_v12',
-    'MC_Egamma_Open_v12',
-    'MC_Ele15_Ele10_CaloIdL_TrackIdL_IsoVL_DZ_v29',
-    'MC_Ele5_WPTight_Gsf_v23',
-    'MC_IsoMu_v31',
-    'MC_PFHT_v32',
-    'MC_PFMET_v33',
-    'MC_PFMHT_v32',
-    'MC_PFScouting_v10',
-    'MC_ReducedIterativeTracking_v26' ),
   Muon0 = cms.vstring( 'HLT_CascadeMu100_v16',
     'HLT_CscCluster100_Ele5_v7',
     'HLT_CscCluster100_Mu5_v10',
@@ -2676,7 +2655,6 @@ process.datasets = cms.PSet(
     'HLT_Dimuon0_Jpsi_NoVertexing_NoOS_v23',
     'HLT_Dimuon0_Jpsi_NoVertexing_v24',
     'HLT_Dimuon0_Jpsi_v24',
-    'HLT_Dimuon0_LowMass_Inclusive_v1',
     'HLT_Dimuon0_LowMass_L1_0er1p5_v24',
     'HLT_Dimuon0_LowMass_L1_4_v24',
     'HLT_Dimuon0_LowMass_L1_TM530_v22',
@@ -2817,8 +2795,8 @@ process.datasets = cms.PSet(
     'HLT_HT200_L1SingleLLPJet_DelayedJet40_SingleDelay2nsInclusive_v14',
     'HLT_HT200_L1SingleLLPJet_DisplacedDijet40_DisplacedTrack_v14',
     'HLT_HT200_L1SingleLLPJet_DisplacedDijet40_Inclusive1PtrkShortSig5_v14',
-    'HLT_HT200_L1SingleLLPJet_DisplacedDijet60_DisplacedTrack_v14')+cms.vstring( 'HLT_HT200_L1SingleLLPJet_PFJet60_NeutralHadronFrac0p7_v10',
-    'HLT_HT200_L1SingleLLPJet_PFJet60_NeutralHadronFrac0p8_v10',
+    'HLT_HT200_L1SingleLLPJet_DisplacedDijet60_DisplacedTrack_v14',
+    'HLT_HT200_L1SingleLLPJet_PFJet60_NeutralHadronFrac0p7_v10')+cms.vstring( 'HLT_HT200_L1SingleLLPJet_PFJet60_NeutralHadronFrac0p8_v10',
     'HLT_HT240_L1SingleLLPJet_DisplacedDijet40_Inclusive1PtrkShortSig5_v11',
     'HLT_HT270_L1SingleLLPJet_DisplacedDijet40_DisplacedTrack_v14',
     'HLT_HT280_L1SingleLLPJet_DisplacedDijet40_Inclusive1PtrkShortSig5_v11',
@@ -3071,8 +3049,8 @@ process.datasets = cms.PSet(
     'HLT_Photon165_R9Id90_HE10_IsoM_v28',
     'HLT_Photon175_v26',
     'HLT_Photon200_v25',
-    'HLT_Photon20_HoverELoose_v21')+cms.vstring( 'HLT_Photon300_NoHE_v24',
-    'HLT_Photon30EB_TightID_TightIso_v15',
+    'HLT_Photon20_HoverELoose_v21',
+    'HLT_Photon300_NoHE_v24')+cms.vstring( 'HLT_Photon30EB_TightID_TightIso_v15',
     'HLT_Photon30_HoverELoose_v21',
     'HLT_Photon32_OneProng32_M50To105_v14',
     'HLT_Photon33_v16',
@@ -3144,7 +3122,6 @@ process.datasets = cms.PSet(
     'HLT_Dimuon0_Jpsi_NoVertexing_NoOS_v23',
     'HLT_Dimuon0_Jpsi_NoVertexing_v24',
     'HLT_Dimuon0_Jpsi_v24',
-    'HLT_Dimuon0_LowMass_Inclusive_v1',
     'HLT_Dimuon0_LowMass_L1_0er1p5_v24',
     'HLT_Dimuon0_LowMass_L1_4_v24',
     'HLT_Dimuon0_LowMass_L1_TM530_v22',
@@ -3204,7 +3181,6 @@ process.datasets = cms.PSet(
     'HLT_Dimuon0_Jpsi_NoVertexing_NoOS_v23',
     'HLT_Dimuon0_Jpsi_NoVertexing_v24',
     'HLT_Dimuon0_Jpsi_v24',
-    'HLT_Dimuon0_LowMass_Inclusive_v1',
     'HLT_Dimuon0_LowMass_L1_0er1p5_v24',
     'HLT_Dimuon0_LowMass_L1_4_v24',
     'HLT_Dimuon0_LowMass_L1_TM530_v22',
@@ -3264,7 +3240,6 @@ process.datasets = cms.PSet(
     'HLT_Dimuon0_Jpsi_NoVertexing_NoOS_v23',
     'HLT_Dimuon0_Jpsi_NoVertexing_v24',
     'HLT_Dimuon0_Jpsi_v24',
-    'HLT_Dimuon0_LowMass_Inclusive_v1',
     'HLT_Dimuon0_LowMass_L1_0er1p5_v24',
     'HLT_Dimuon0_LowMass_L1_4_v24',
     'HLT_Dimuon0_LowMass_L1_TM530_v22',
@@ -3324,7 +3299,6 @@ process.datasets = cms.PSet(
     'HLT_Dimuon0_Jpsi_NoVertexing_NoOS_v23',
     'HLT_Dimuon0_Jpsi_NoVertexing_v24',
     'HLT_Dimuon0_Jpsi_v24',
-    'HLT_Dimuon0_LowMass_Inclusive_v1',
     'HLT_Dimuon0_LowMass_L1_0er1p5_v24',
     'HLT_Dimuon0_LowMass_L1_4_v24',
     'HLT_Dimuon0_LowMass_L1_TM530_v22',
@@ -3384,7 +3358,6 @@ process.datasets = cms.PSet(
     'HLT_Dimuon0_Jpsi_NoVertexing_NoOS_v23',
     'HLT_Dimuon0_Jpsi_NoVertexing_v24',
     'HLT_Dimuon0_Jpsi_v24',
-    'HLT_Dimuon0_LowMass_Inclusive_v1',
     'HLT_Dimuon0_LowMass_L1_0er1p5_v24',
     'HLT_Dimuon0_LowMass_L1_4_v24',
     'HLT_Dimuon0_LowMass_L1_TM530_v22',
@@ -3444,7 +3417,6 @@ process.datasets = cms.PSet(
     'HLT_Dimuon0_Jpsi_NoVertexing_NoOS_v23',
     'HLT_Dimuon0_Jpsi_NoVertexing_v24',
     'HLT_Dimuon0_Jpsi_v24',
-    'HLT_Dimuon0_LowMass_Inclusive_v1',
     'HLT_Dimuon0_LowMass_L1_0er1p5_v24',
     'HLT_Dimuon0_LowMass_L1_4_v24',
     'HLT_Dimuon0_LowMass_L1_TM530_v22',
@@ -3504,7 +3476,6 @@ process.datasets = cms.PSet(
     'HLT_Dimuon0_Jpsi_NoVertexing_NoOS_v23',
     'HLT_Dimuon0_Jpsi_NoVertexing_v24',
     'HLT_Dimuon0_Jpsi_v24',
-    'HLT_Dimuon0_LowMass_Inclusive_v1',
     'HLT_Dimuon0_LowMass_L1_0er1p5_v24',
     'HLT_Dimuon0_LowMass_L1_4_v24',
     'HLT_Dimuon0_LowMass_L1_TM530_v22',
@@ -3564,7 +3535,6 @@ process.datasets = cms.PSet(
     'HLT_Dimuon0_Jpsi_NoVertexing_NoOS_v23',
     'HLT_Dimuon0_Jpsi_NoVertexing_v24',
     'HLT_Dimuon0_Jpsi_v24',
-    'HLT_Dimuon0_LowMass_Inclusive_v1',
     'HLT_Dimuon0_LowMass_L1_0er1p5_v24',
     'HLT_Dimuon0_LowMass_L1_4_v24',
     'HLT_Dimuon0_LowMass_L1_TM530_v22',
@@ -4563,7 +4533,7 @@ process.GlobalTag = cms.ESSource( "PoolDBESSource",
       authenticationPath = cms.untracked.string( "." )
     ),
     connect = cms.string( "frontier://FrontierProd/CMS_CONDITIONS" ),
-    globaltag = cms.string( "None" ),
+    globaltag = cms.string( "150X_dataRun3_HLT_v1" ),
     snapshotTime = cms.string( "" ),
     frontierKey = cms.untracked.string( "" ),
     toGet = cms.VPSet( 
@@ -7615,7 +7585,7 @@ process.hltSiPixelClustersSoA = cms.EDProducer( "SiPixelRawToClusterPhase1@alpak
     VCaltoElectronGain_L1 = cms.double( 1.0 ),
     VCaltoElectronOffset = cms.double( 0.0 ),
     VCaltoElectronOffset_L1 = cms.double( 0.0 ),
-    DoDigiMorphing = cms.bool( False ),
+    DoDigiMorphing = cms.bool( True ),
     MaxFakesInModule = cms.uint32( 2400 ),
     InputLabel = cms.InputTag( "rawDataCollector" ),
     Regions = cms.PSet(  ),
@@ -13132,7 +13102,7 @@ process.hltElePixelHitDoubletsUnseeded = cms.EDProducer( "HitPairEDProducer",
     trackingRegionsSeedingLayers = cms.InputTag( "" ),
     clusterCheck = cms.InputTag( "" ),
     produceSeedingHitSets = cms.bool( True ),
-    produceIntermediateHitDoublets = cms.bool( False ),
+    produceIntermediateHitDoublets = cms.bool( True ),
     maxElement = cms.uint32( 0 ),
     maxElementTotal = cms.uint32( 50000000 ),
     putEmptyIfMaxElementReached = cms.bool( False ),
@@ -13143,7 +13113,7 @@ process.hltElePixelHitDoubletsForTripletsUnseeded = cms.EDProducer( "HitPairEDPr
     trackingRegions = cms.InputTag( "hltEleSeedsTrackingRegionsUnseeded" ),
     trackingRegionsSeedingLayers = cms.InputTag( "" ),
     clusterCheck = cms.InputTag( "" ),
-    produceSeedingHitSets = cms.bool( False ),
+    produceSeedingHitSets = cms.bool( True ),
     produceIntermediateHitDoublets = cms.bool( True ),
     maxElement = cms.uint32( 0 ),
     maxElementTotal = cms.uint32( 50000000 ),
@@ -15333,6 +15303,367 @@ process.hltPreDSTPFScoutingZeroBias = cms.EDFilter( "HLTPrescaler",
     offset = cms.uint32( 0 ),
     L1GtReadoutRecordTag = cms.InputTag( "hltGtStage2Digis" )
 )
+process.hltTriggerRatesMonitor = cms.EDProducer( "TriggerRatesMonitor",
+    l1tResults = cms.untracked.InputTag( "hltGtStage2Digis" ),
+    hltResults = cms.untracked.InputTag( 'TriggerResults','','@currentProcess' ),
+    dqmPath = cms.untracked.string( "HLT/TriggerRates" ),
+    lumisectionRange = cms.untracked.uint32( 2500 )
+)
+process.hltTriggerBxMonitor = cms.EDProducer( "TriggerBxMonitor",
+    l1tResults = cms.untracked.InputTag( "hltGtStage2Digis" ),
+    hltResults = cms.untracked.InputTag( 'TriggerResults','','@currentProcess' ),
+    dqmPath = cms.untracked.string( "HLT/TriggerBx" ),
+    make1DPlots = cms.untracked.bool( True ),
+    make2DPlots = cms.untracked.bool( False ),
+    lsRange = cms.untracked.uint32( 4000 )
+)
+process.hltTriggerObjectTnPMonitor = cms.EDProducer( "TrigObjTnPSource",
+    triggerEvent = cms.InputTag( 'hltTriggerSummaryAOD','','@currentProcess' ),
+    triggerResults = cms.InputTag( 'TriggerResults','','@currentProcess' ),
+    histColls = cms.VPSet( 
+      cms.PSet(  evtTrigSel = cms.PSet( 
+  selectionStr = cms.string( "HLT_Ele32_WPTight_Gsf_v*" ),
+  isANDForExpandedPaths = cms.bool( False ),
+  verbose = cms.int32( 1 )
+),
+        tagCuts = cms.VPSet( 
+          cms.PSet(  allowedRanges = cms.vstring( '-1.4442:1.4442' ),
+            rangeVar = cms.string( "eta" )
+          )
+        ),
+        probeFilters = cms.vstring( 'hltEG32L1SingleEGOrEtFilter',
+          'hltEle32WPTightClusterShapeFilter',
+          'hltEle32WPTightHEFilter',
+          'hltEle32WPTightEcalIsoFilter',
+          'hltEle32WPTightHcalIsoFilter',
+          'hltEle32WPTightPixelMatchFilter',
+          'hltEle32WPTightPMS2Filter',
+          'hltEle32WPTightGsfOneOEMinusOneOPFilter',
+          'hltEle32WPTightGsfMissingHitsFilter',
+          'hltEle32WPTightGsfDetaFilter',
+          'hltEle32WPTightGsfDphiFilter',
+          'hltEle32WPTightGsfTrackIsoFilter' ),
+        probeCuts = cms.VPSet( 
+          cms.PSet(  allowedRanges = cms.vstring( '-2.5:-1.556',
+  '-1.4442:1.4442',
+  '1.556:2.5' ),
+            rangeVar = cms.string( "eta" )
+          )
+        ),
+        tagFilters = cms.PSet( 
+          filterSets = cms.VPSet( 
+            cms.PSet(  filters = cms.vstring( 'hltEle32WPTightGsfTrackIsoFilter' ),
+              isAND = cms.bool( False )
+            )
+          ),
+          isAND = cms.bool( False )
+        ),
+        histDefs = cms.PSet( 
+          configs = cms.VPSet( 
+            cms.PSet(  bins = cms.vdouble( 32.0, 40.0, 50.0, 100.0 ),
+              titleSuffex = cms.string( " (Barrel);p_{T} GeV;mass GeV" ),
+              nameSuffex = cms.string( "_ptEB" ),
+              filler = cms.PSet( 
+                var = cms.string( "pt" ),
+                localCuts = cms.VPSet( 
+                  cms.PSet(  allowedRanges = cms.vstring( '-1.4442:1.4442' ),
+                    rangeVar = cms.string( "eta" )
+                  )
+                )
+              )
+            ),
+            cms.PSet(  bins = cms.vdouble( 32.0, 40.0, 50.0, 100.0 ),
+              titleSuffex = cms.string( " (Endcap);p_{T} GeV;mass GeV" ),
+              nameSuffex = cms.string( "_ptEE" ),
+              filler = cms.PSet( 
+                var = cms.string( "pt" ),
+                localCuts = cms.VPSet( 
+                  cms.PSet(  allowedRanges = cms.vstring( '-2.5:-1.556',
+  '1.556:2.5' ),
+                    rangeVar = cms.string( "eta" )
+                  )
+                )
+              )
+            ),
+            cms.PSet(  bins = cms.vdouble( -3.14, -1.57, 0.0, 1.57, 3.14 ),
+              titleSuffex = cms.string( " (Barrel);#phi rad;mass GeV" ),
+              nameSuffex = cms.string( "_phiEB" ),
+              filler = cms.PSet( 
+                var = cms.string( "phi" ),
+                localCuts = cms.VPSet( 
+                  cms.PSet(  allowedRanges = cms.vstring( '-1.4442:1.4442' ),
+                    rangeVar = cms.string( "eta" )
+                  )
+                )
+              )
+            ),
+            cms.PSet(  bins = cms.vdouble( -3.14, -1.57, 0.0, 1.57, 3.14 ),
+              titleSuffex = cms.string( " (Endcap);#phi rad;mass GeV" ),
+              nameSuffex = cms.string( "_phiEE" ),
+              filler = cms.PSet( 
+                var = cms.string( "phi" ),
+                localCuts = cms.VPSet( 
+                  cms.PSet(  allowedRanges = cms.vstring( '-2.5:-1.556',
+  '1.556:2.5' ),
+                    rangeVar = cms.string( "eta" )
+                  )
+                )
+              )
+            ),
+            cms.PSet(  bins = cms.vdouble( -2.5, -1.5, 0.0, 1.5, 2.5 ),
+              titleSuffex = cms.string( ";#eta;mass GeV" ),
+              nameSuffex = cms.string( "_eta" ),
+              filler = cms.PSet( 
+                var = cms.string( "eta" ),
+                localCuts = cms.VPSet( 
+                )
+              )
+            )
+          ),
+          massBins = cms.vdouble( 60.0, 61.0, 62.0, 63.0, 64.0, 65.0, 66.0, 67.0, 68.0, 69.0, 70.0, 71.0, 72.0, 73.0, 74.0, 75.0, 76.0, 77.0, 78.0, 79.0, 80.0, 81.0, 82.0, 83.0, 84.0, 85.0, 86.0, 87.0, 88.0, 89.0, 90.0, 91.0, 92.0, 93.0, 94.0, 95.0, 96.0, 97.0, 98.0, 99.0, 100.0, 101.0, 102.0, 103.0, 104.0, 105.0, 106.0, 107.0, 108.0, 109.0, 110.0, 111.0, 112.0, 113.0, 114.0, 115.0, 116.0, 117.0, 118.0, 119.0, 120.0 )
+        ),
+        folderName = cms.string( "HLT/EGM/TrigObjTnP" ),
+        collName = cms.string( "stdTag" )
+      ),
+      cms.PSet(  evtTrigSel = cms.PSet( 
+  selectionStr = cms.string( "HLT_Ele32_WPTight_Gsf_v*" ),
+  isANDForExpandedPaths = cms.bool( False ),
+  verbose = cms.int32( 1 )
+),
+        tagCuts = cms.VPSet( 
+          cms.PSet(  allowedRanges = cms.vstring( '-1.4442:1.4442' ),
+            rangeVar = cms.string( "eta" )
+          )
+        ),
+        probeFilters = cms.vstring( 'hltEle23Ele12CaloIdLTrackIdLIsoVLTrackIsoLeg2Filter' ),
+        probeCuts = cms.VPSet( 
+          cms.PSet(  allowedRanges = cms.vstring( '-2.5:-1.556',
+  '-1.4442:1.4442',
+  '1.556:2.5' ),
+            rangeVar = cms.string( "eta" )
+          )
+        ),
+        tagFilters = cms.PSet( 
+          filterSets = cms.VPSet( 
+            cms.PSet(  filters = cms.vstring( 'hltEle32WPTightGsfTrackIsoFilter' ),
+              isAND = cms.bool( False )
+            )
+          ),
+          isAND = cms.bool( False )
+        ),
+        histDefs = cms.PSet( 
+          configs = cms.VPSet( 
+            cms.PSet(  bins = cms.vdouble( 12.0, 32.0, 40.0, 50.0, 100.0 ),
+              titleSuffex = cms.string( " (Barrel);p_{T} GeV;mass GeV" ),
+              nameSuffex = cms.string( "_ptEB" ),
+              filler = cms.PSet( 
+                var = cms.string( "pt" ),
+                localCuts = cms.VPSet( 
+                  cms.PSet(  allowedRanges = cms.vstring( '-1.4442:1.4442' ),
+                    rangeVar = cms.string( "eta" )
+                  )
+                )
+              )
+            ),
+            cms.PSet(  bins = cms.vdouble( 12.0, 32.0, 40.0, 50.0, 100.0 ),
+              titleSuffex = cms.string( " (Endcap);p_{T} GeV;mass GeV" ),
+              nameSuffex = cms.string( "_ptEE" ),
+              filler = cms.PSet( 
+                var = cms.string( "pt" ),
+                localCuts = cms.VPSet( 
+                  cms.PSet(  allowedRanges = cms.vstring( '-2.5:-1.556',
+  '1.556:2.5' ),
+                    rangeVar = cms.string( "eta" )
+                  )
+                )
+              )
+            ),
+            cms.PSet(  bins = cms.vdouble( -3.14, -1.57, 0.0, 1.57, 3.14 ),
+              titleSuffex = cms.string( " (Barrel);#phi rad;mass GeV" ),
+              nameSuffex = cms.string( "_phiEB" ),
+              filler = cms.PSet( 
+                var = cms.string( "phi" ),
+                localCuts = cms.VPSet( 
+                  cms.PSet(  allowedRanges = cms.vstring( '-1.4442:1.4442' ),
+                    rangeVar = cms.string( "eta" )
+                  )
+                )
+              )
+            ),
+            cms.PSet(  bins = cms.vdouble( -3.14, -1.57, 0.0, 1.57, 3.14 ),
+              titleSuffex = cms.string( " (Endcap);#phi rad;mass GeV" ),
+              nameSuffex = cms.string( "_phiEE" ),
+              filler = cms.PSet( 
+                var = cms.string( "phi" ),
+                localCuts = cms.VPSet( 
+                  cms.PSet(  allowedRanges = cms.vstring( '-2.5:-1.556',
+  '1.556:2.5' ),
+                    rangeVar = cms.string( "eta" )
+                  )
+                )
+              )
+            ),
+            cms.PSet(  bins = cms.vdouble( -2.5, -1.5, 0.0, 1.5, 2.5 ),
+              titleSuffex = cms.string( ";#eta;mass GeV" ),
+              nameSuffex = cms.string( "_eta" ),
+              filler = cms.PSet( 
+                var = cms.string( "eta" ),
+                localCuts = cms.VPSet( 
+                )
+              )
+            )
+          ),
+          massBins = cms.vdouble( 60.0, 61.0, 62.0, 63.0, 64.0, 65.0, 66.0, 67.0, 68.0, 69.0, 70.0, 71.0, 72.0, 73.0, 74.0, 75.0, 76.0, 77.0, 78.0, 79.0, 80.0, 81.0, 82.0, 83.0, 84.0, 85.0, 86.0, 87.0, 88.0, 89.0, 90.0, 91.0, 92.0, 93.0, 94.0, 95.0, 96.0, 97.0, 98.0, 99.0, 100.0, 101.0, 102.0, 103.0, 104.0, 105.0, 106.0, 107.0, 108.0, 109.0, 110.0, 111.0, 112.0, 113.0, 114.0, 115.0, 116.0, 117.0, 118.0, 119.0, 120.0 )
+        ),
+        folderName = cms.string( "HLT/EGM/TrigObjTnP" ),
+        collName = cms.string( "stdTag" )
+      ),
+      cms.PSet(  evtTrigSel = cms.PSet( 
+  selectionStr = cms.string( "HLT_Ele32_WPTight_Gsf_v*" ),
+  isANDForExpandedPaths = cms.bool( False ),
+  verbose = cms.int32( 1 )
+),
+        tagCuts = cms.VPSet( 
+          cms.PSet(  allowedRanges = cms.vstring( '-1.4442:1.4442' ),
+            rangeVar = cms.string( "eta" )
+          )
+        ),
+        probeFilters = cms.vstring( 'hltDiEG25CaloIdLClusterShapeUnseededFilter',
+          'hltDiEle25CaloIdLPixelMatchUnseededFilter',
+          'hltDiEle25CaloIdLMWPMS2UnseededFilter' ),
+        probeCuts = cms.VPSet( 
+          cms.PSet(  allowedRanges = cms.vstring( '-2.5:-1.556',
+  '-1.4442:1.4442',
+  '1.556:2.5' ),
+            rangeVar = cms.string( "eta" )
+          )
+        ),
+        tagFilters = cms.PSet( 
+          filterSets = cms.VPSet( 
+            cms.PSet(  filters = cms.vstring( 'hltEle32WPTightGsfTrackIsoFilter',
+  'hltEle25CaloIdLMWPMS2Filter' ),
+              isAND = cms.bool( True )
+            )
+          ),
+          isAND = cms.bool( False )
+        ),
+        histDefs = cms.PSet( 
+          configs = cms.VPSet( 
+            cms.PSet(  bins = cms.vdouble( 25.0, 33.0, 40.0, 50.0, 100.0 ),
+              titleSuffex = cms.string( " (Barrel);p_{T} GeV;mass GeV" ),
+              nameSuffex = cms.string( "_ptEB" ),
+              filler = cms.PSet( 
+                var = cms.string( "pt" ),
+                localCuts = cms.VPSet( 
+                  cms.PSet(  allowedRanges = cms.vstring( '-1.4442:1.4442' ),
+                    rangeVar = cms.string( "eta" )
+                  )
+                )
+              )
+            ),
+            cms.PSet(  bins = cms.vdouble( 25.0, 33.0, 40.0, 50.0, 100.0 ),
+              titleSuffex = cms.string( " (Endcap);p_{T} GeV;mass GeV" ),
+              nameSuffex = cms.string( "_ptEE" ),
+              filler = cms.PSet( 
+                var = cms.string( "pt" ),
+                localCuts = cms.VPSet( 
+                  cms.PSet(  allowedRanges = cms.vstring( '-2.5:-1.556',
+  '1.556:2.5' ),
+                    rangeVar = cms.string( "eta" )
+                  )
+                )
+              )
+            ),
+            cms.PSet(  bins = cms.vdouble( -3.14, -1.57, 0.0, 1.57, 3.14 ),
+              titleSuffex = cms.string( " (Barrel);#phi rad;mass GeV" ),
+              nameSuffex = cms.string( "_phiEB" ),
+              filler = cms.PSet( 
+                var = cms.string( "phi" ),
+                localCuts = cms.VPSet( 
+                  cms.PSet(  allowedRanges = cms.vstring( '-1.4442:1.4442' ),
+                    rangeVar = cms.string( "eta" )
+                  )
+                )
+              )
+            ),
+            cms.PSet(  bins = cms.vdouble( -3.14, -1.57, 0.0, 1.57, 3.14 ),
+              titleSuffex = cms.string( " (Endcap);#phi rad;mass GeV" ),
+              nameSuffex = cms.string( "_phiEE" ),
+              filler = cms.PSet( 
+                var = cms.string( "phi" ),
+                localCuts = cms.VPSet( 
+                  cms.PSet(  allowedRanges = cms.vstring( '-2.5:-1.556',
+  '1.556:2.5' ),
+                    rangeVar = cms.string( "eta" )
+                  )
+                )
+              )
+            ),
+            cms.PSet(  bins = cms.vdouble( -2.5, -1.5, 0.0, 1.5, 2.5 ),
+              titleSuffex = cms.string( ";#eta;mass GeV" ),
+              nameSuffex = cms.string( "_eta" ),
+              filler = cms.PSet( 
+                var = cms.string( "eta" ),
+                localCuts = cms.VPSet( 
+                )
+              )
+            )
+          ),
+          massBins = cms.vdouble( 60.0, 61.0, 62.0, 63.0, 64.0, 65.0, 66.0, 67.0, 68.0, 69.0, 70.0, 71.0, 72.0, 73.0, 74.0, 75.0, 76.0, 77.0, 78.0, 79.0, 80.0, 81.0, 82.0, 83.0, 84.0, 85.0, 86.0, 87.0, 88.0, 89.0, 90.0, 91.0, 92.0, 93.0, 94.0, 95.0, 96.0, 97.0, 98.0, 99.0, 100.0, 101.0, 102.0, 103.0, 104.0, 105.0, 106.0, 107.0, 108.0, 109.0, 110.0, 111.0, 112.0, 113.0, 114.0, 115.0, 116.0, 117.0, 118.0, 119.0, 120.0 )
+        ),
+        folderName = cms.string( "HLT/EGM/TrigObjTnP" ),
+        collName = cms.string( "stdTagAndEle25MW" )
+      )
+    )
+)
+process.hltLumiMonitor = cms.EDProducer( "LumiMonitor",
+    pixelClusters = cms.InputTag( "hltSiPixelClusters" ),
+    scalers = cms.InputTag( "" ),
+    onlineMetaDataDigis = cms.InputTag( "hltOnlineMetaDataDigis" ),
+    folderName = cms.string( "HLT/LumiMonitoring" ),
+    doPixelLumi = cms.bool( False ),
+    useBPixLayer1 = cms.bool( False ),
+    minNumberOfPixelsPerCluster = cms.int32( 2 ),
+    minPixelClusterCharge = cms.double( 15000.0 ),
+    histoPSet = cms.PSet( 
+      pixelClusterPSet = cms.PSet( 
+        xmin = cms.double( -0.5 ),
+        nbins = cms.int32( 200 ),
+        xmax = cms.double( 19999.5 )
+      ),
+      lumiPSet = cms.PSet( 
+        xmin = cms.double( 0.0 ),
+        nbins = cms.int32( 6000 ),
+        xmax = cms.double( 30000.0 )
+      ),
+      lsPSet = cms.PSet(  nbins = cms.int32( 2500 ) ),
+      pixellumiPSet = cms.PSet( 
+        xmin = cms.double( 0.0 ),
+        nbins = cms.int32( 300 ),
+        xmax = cms.double( 3.0 )
+      ),
+      puPSet = cms.PSet( 
+        xmin = cms.double( 0.0 ),
+        nbins = cms.int32( 130 ),
+        xmax = cms.double( 130.0 )
+      )
+    )
+)
+process.hltPSColumnMonitor = cms.EDProducer( "PSMonitor",
+    ugtBXInputTag = cms.InputTag( "hltGtStage2Digis" ),
+    folderName = cms.string( "HLT/PSMonitoring" ),
+    histoPSet = cms.PSet( 
+      psColumnPSet = cms.PSet(  nbins = cms.int32( 20 ) ),
+      lsPSet = cms.PSet(  nbins = cms.int32( 2500 ) )
+    )
+)
+process.hltOnlineBeamMonitor = cms.EDProducer( "OnlineBeamMonitor",
+    MonitorName = cms.untracked.string( "HLT/BeamSpotMonitor" ),
+    OnlineBeamSpotLabel = cms.untracked.InputTag( "hltOnlineBeamSpot" ),
+    AppendRunToFileName = cms.untracked.bool( False ),
+    WriteDIPAscii = cms.untracked.bool( False ),
+    DIPFileName = cms.untracked.string( "BeamFitResultsForDIP.txt" )
+)
 
 process.HLTL1UnpackerSequence = cms.Sequence( process.hltGtStage2Digis + process.hltGtStage2ObjectMap )
 process.HLTBeamSpot = cms.Sequence( process.hltOnlineMetaDataDigis + process.hltOnlineBeamSpot )
@@ -15439,9 +15770,10 @@ process.DST_PFScouting_CICADAVTight_v6 = cms.Path( process.HLTBeginSequence + pr
 process.DST_PFScouting_SingleMuon_v10 = cms.Path( process.HLTBeginSequence + process.hltL1sSingleMuScouting + process.hltPreDSTPFScoutingSingleMuon + process.hltL1fL1sMuScoutingL1Filtered0 + process.HLTL2muonrecoSequence + cms.ignore(process.hltL2fL1sMuScoutingL2Filtered0) + process.HLTL3muonrecoSequence + cms.ignore(process.hltL1fForIterL3L1fL1sMuScoutingL1Filtered0) + process.hltL3fL1sMuScoutingL3Filtered0 + process.HLTPFScoutingTrackingSequence + process.HLTEndSequence )
 process.DST_PFScouting_SinglePhotonEB_v7 = cms.Path( process.HLTBeginSequence + process.hltL1sSingleEGor + process.hltPreDSTPFScoutingSinglePhotonEB + process.HLTPhoton30EBTightIDTightIsoSequence + process.HLTPFScoutingTrackingSequence + process.HLTEndSequence )
 process.DST_PFScouting_ZeroBias_v8 = cms.Path( process.HLTBeginSequence + process.hltL1sZeroBias + process.hltPreDSTPFScoutingZeroBias + process.HLTPFScoutingTrackingSequence + process.HLTEndSequence )
+process.DQMHistograms = cms.EndPath( process.hltGtStage2Digis + process.hltOnlineMetaDataDigis + process.hltOnlineBeamSpot + process.hltTriggerRatesMonitor + process.hltTriggerBxMonitor + process.hltTriggerObjectTnPMonitor + process.hltLumiMonitor + process.hltPSColumnMonitor + process.hltOnlineBeamMonitor )
 
 
-process.schedule = cms.Schedule( *(process.DST_PFScouting_DoubleMuonNoVtx_v4, process.DST_PFScouting_DoubleMuonVtx_v4, process.DST_PFScouting_DoubleMuonVtxMonitorJPsi_v4, process.DST_PFScouting_DoubleMuonVtxMonitorZ_v4, process.DST_PFScouting_DoubleEG_v10, process.DST_PFScouting_DoubleEGMonitorJPsi_v1, process.DST_PFScouting_DoubleEGMonitorZ_v1, process.DST_PFScouting_SinglePhotonEBMonitorJPsi_v1, process.DST_PFScouting_SinglePhotonEBMonitorZ_v1, process.DST_PFScouting_JetHT_v10, process.DST_PFScouting_AXOVLoose_v8, process.DST_PFScouting_AXOLoose_v8, process.DST_PFScouting_AXOMedium_v4, process.DST_PFScouting_AXOTight_v10, process.DST_PFScouting_AXOVTight_v8, process.DST_PFScouting_CICADAVLoose_v6, process.DST_PFScouting_CICADALoose_v6, process.DST_PFScouting_CICADAMedium_v6, process.DST_PFScouting_CICADATight_v6, process.DST_PFScouting_CICADAVTight_v6, process.DST_PFScouting_SingleMuon_v10, process.DST_PFScouting_SinglePhotonEB_v7, process.DST_PFScouting_ZeroBias_v8, ))
+process.schedule = cms.Schedule( *(process.DST_PFScouting_DoubleMuonNoVtx_v4, process.DST_PFScouting_DoubleMuonVtx_v4, process.DST_PFScouting_DoubleMuonVtxMonitorJPsi_v4, process.DST_PFScouting_DoubleMuonVtxMonitorZ_v4, process.DST_PFScouting_DoubleEG_v10, process.DST_PFScouting_DoubleEGMonitorJPsi_v1, process.DST_PFScouting_DoubleEGMonitorZ_v1, process.DST_PFScouting_SinglePhotonEBMonitorJPsi_v1, process.DST_PFScouting_SinglePhotonEBMonitorZ_v1, process.DST_PFScouting_JetHT_v10, process.DST_PFScouting_AXOVLoose_v8, process.DST_PFScouting_AXOLoose_v8, process.DST_PFScouting_AXOMedium_v4, process.DST_PFScouting_AXOTight_v10, process.DST_PFScouting_AXOVTight_v8, process.DST_PFScouting_CICADAVLoose_v6, process.DST_PFScouting_CICADALoose_v6, process.DST_PFScouting_CICADAMedium_v6, process.DST_PFScouting_CICADATight_v6, process.DST_PFScouting_CICADAVTight_v6, process.DST_PFScouting_SingleMuon_v10, process.DST_PFScouting_SinglePhotonEB_v7, process.DST_PFScouting_ZeroBias_v8, process.DQMHistograms, ))
 
 
 # source module (EDM inputs)
@@ -15468,15 +15800,6 @@ process.hltOutputFull = cms.OutputModule( "PoolOutputModule",
     ),
     outputCommands = cms.untracked.vstring( 'keep *' )
 )
-
-process.hltOutputFull.outputCommands = cms.untracked.vstring(
-    "drop *",
-    "keep *_*Packer*_*_*",
-    "keep FEDRawDataCollection_*_*_*",
-    "keep *_gtStage2Digis_*_*",
-    "keep edmTriggerResults_*_*_*"
-)
-
 process.FullOutput = cms.EndPath( process.hltOutputFull )
 process.schedule.append( process.FullOutput )
 
@@ -15487,7 +15810,7 @@ process.maxEvents = cms.untracked.PSet(
 
 # enable TrigReport, TimeReport and MultiThreading
 process.options.wantSummary = True
-process.options.numberOfThreads = 4
+process.options.numberOfThreads = 1
 process.options.numberOfStreams = 0
 
 # override the GlobalTag, connection string and pfnPrefix
@@ -15511,8 +15834,8 @@ process.dqmOutput = cms.OutputModule("DQMRootOutputModule",
     fileName = cms.untracked.string("DQMIO.root")
 )
 
-process.DQMOutput = cms.EndPath( process.dqmOutput )
-process.schedule.append( process.DQMOutput )
+#process.DQMOutput = cms.EndPath( process.dqmOutput )
+#process.schedule.append( process.DQMOutput )
 
 # add specific customizations
 _customInfo = {}
@@ -15541,3 +15864,13 @@ modifyHLTforEras(process)
 process.source.bypassVersionCheck = cms.untracked.bool(True)
 process.source.inputCommands = cms.untracked.vstring("keep *","drop TH2PolyMEtoEDM_*_*_*")
 process.options.wantSummary = False
+
+process.hltOutputFull.outputCommands = cms.untracked.vstring(
+    "drop *",
+    "keep *_*Packer*_*_*",
+    "keep FEDRawDataCollection_hltFEDSelectorL1_*_*",
+    "keep *_gtStage2Digis_*_*",
+    "keep edmTriggerResults_*_*_*",
+    "keep *_addPileupInfo_*_*",
+    "keep *_genParticles_*_*",
+)

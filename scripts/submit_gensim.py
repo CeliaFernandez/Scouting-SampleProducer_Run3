@@ -58,6 +58,7 @@ config.General.transferLogs = False
 
 config.JobType.pluginName = 'PrivateMC'
 config.JobType.psetName = '{cfg}'
+config.JobType.numCores = 1
 
 config.Data.outputPrimaryDataset = '{name}'
 config.Data.splitting = 'EventBased'
